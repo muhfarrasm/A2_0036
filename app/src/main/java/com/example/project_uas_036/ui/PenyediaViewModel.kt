@@ -1,6 +1,7 @@
 package com.example.project_uas_036.ui
 
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresExtension
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.createSavedStateHandle
@@ -12,6 +13,10 @@ import com.example.project_uas_036.ui.viewmodel.Buku.DetailBukuViewModel
 import com.example.project_uas_036.ui.viewmodel.Buku.HomeBukuViewModel
 import com.example.project_uas_036.ui.viewmodel.Buku.InsertBukuViewModel
 import com.example.project_uas_036.ui.viewmodel.Buku.UpdateBukuViewModel
+import com.example.project_uas_036.ui.viewmodel.Kategori.DetailKategoriViewModel
+import com.example.project_uas_036.ui.viewmodel.Kategori.HomeKategoriViewModel
+import com.example.project_uas_036.ui.viewmodel.Kategori.InsertKategoriViewModel
+import com.example.project_uas_036.ui.viewmodel.Kategori.UpdateKategoriViewModel
 
 object PenyediaViewModel {
     @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
@@ -21,6 +26,12 @@ object PenyediaViewModel {
         initializer { DetailBukuViewModel(createSavedStateHandle(),aplikasiKontak().bukcontainer.kontakRepository) }
         initializer { UpdateBukuViewModel(createSavedStateHandle(),aplikasiKontak().bukcontainer.kontakRepository) }
 
+        initializer { HomeKategoriViewModel(aplikasiKontak().katcontainer.kontakKategoriRepository) }
+        initializer { InsertKategoriViewModel(aplikasiKontak().katcontainer.kontakKategoriRepository) }
+        initializer { DetailKategoriViewModel(createSavedStateHandle(),aplikasiKontak().katcontainer.kontakKategoriRepository) }
+        initializer {
+            Log.d("PenyediaViewModel", "Kategori Repository: ${aplikasiKontak().katcontainer.kontakKategoriRepository}")
+            UpdateKategoriViewModel(createSavedStateHandle(),aplikasiKontak().katcontainer.kontakKategoriRepository) }
     }
 }
 fun CreationExtras.aplikasiKontak(): PerpusApp =
