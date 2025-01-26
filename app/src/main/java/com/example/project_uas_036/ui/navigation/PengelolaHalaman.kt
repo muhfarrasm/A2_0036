@@ -27,6 +27,12 @@ import com.example.project_uas_036.ui.view.Kategori.DetailKategoriViewScreen
 import com.example.project_uas_036.ui.view.Kategori.EntryKategoriScreen
 import com.example.project_uas_036.ui.view.Kategori.HomeKategoriScreen
 import com.example.project_uas_036.ui.view.Kategori.UpdateKategoriScreen
+import com.example.project_uas_036.ui.view.Penerbit.DestinasiHomePenerbit
+import com.example.project_uas_036.ui.view.Penerbit.DestinasiTambahPenerbit
+import com.example.project_uas_036.ui.view.Penerbit.DestinasiUpdatePenerbit
+import com.example.project_uas_036.ui.view.Penerbit.EntryPenerbitScreen
+import com.example.project_uas_036.ui.view.Penerbit.HomePenerbitScreen
+import com.example.project_uas_036.ui.view.Penerbit.UpdatePenerbitScreen
 import com.example.project_uas_036.ui.view.Penulis.DestinasiDetailPenulis
 import com.example.project_uas_036.ui.view.Penulis.DestinasiHomePenulis
 import com.example.project_uas_036.ui.view.Penulis.DestinasiTambahPenulis
@@ -57,6 +63,9 @@ fun PengelolaHalaman(
                 navigateToHomeKategori = { navController.navigate(DestinasiHomeKategori.route)},
                 navigateToHomePenulis = {
                     navController.navigate(DestinasiHomePenulis.route)
+                },
+                navigateToHomePenerbit = {
+                    navController.navigate(DestinasiHomePenerbit.route)
                 },
 
             )
@@ -238,6 +247,47 @@ fun PengelolaHalaman(
             val idpenulis = it.arguments?.getString(DestinasiUpdatePenulis.id_penulis)
             idpenulis?.let { idpenulis ->
                 UpdatePenulisScreen(
+                    onBack = { navController.popBackStack() },
+                    onNavigate = { navController.popBackStack() }
+                )
+            }
+        }
+
+        //          PENERBIT
+
+        composable(DestinasiHomePenerbit.route) {
+            HomePenerbitScreen(
+                navigateToPenerbitEntry = { navController.navigate(DestinasiTambahPenerbit.route) },
+                navigateToHomeBuku = {
+                    navController.navigate(DestinasiHomeBuku.route)
+                },
+                navigateToUpdatePenerbit = { idPenerbit ->
+                    navController.navigate("${DestinasiUpdatePenerbit.route}/$idPenerbit") // Add navigation for update
+                }
+            )
+        }
+
+        // Input Data (Tambah Penerbit)
+        composable(DestinasiTambahPenerbit.route) {
+            EntryPenerbitScreen(navigateBack = {
+                navController.navigate(DestinasiHomePenerbit.route) {
+                    // Menghapus semua halaman sebelumnya agar back ke Home langsung ke halaman utama
+                    popUpTo(DestinasiHomePenerbit.route) { inclusive = true }
+                }
+            })
+        }
+
+
+        // Update Penulis
+        composable(
+            DestinasiUpdatePenerbit.routesWithArg,
+            arguments = listOf(navArgument(DestinasiUpdatePenerbit.id_penerbit) {
+                type = NavType.StringType // Pastikan tipe argument sesuai
+            })
+        ) {
+            val idpenerbit = it.arguments?.getString(DestinasiUpdatePenerbit.id_penerbit)
+            idpenerbit?.let { idpenulis ->
+                UpdatePenerbitScreen(
                     onBack = { navController.popBackStack() },
                     onNavigate = { navController.popBackStack() }
                 )
