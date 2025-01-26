@@ -65,6 +65,7 @@ object DestinasiHomeBuku : DestinasiNavigasi {
 @Composable
 fun HomeBukuScreen(
     navigateToltemEntry: () -> Unit,
+    navigateToHomePenerbit: () -> Unit,
     navigateToHomePenulis: () -> Unit,
     navigateToHomeKategori: () -> Unit,
     modifier: Modifier = Modifier,
@@ -118,7 +119,7 @@ fun HomeBukuScreen(
                             Text(text = "Home Penulis")
                         }
                         Button(
-                            onClick = navigateToHomeKategori,
+                            onClick = navigateToHomePenerbit,
                             shape = MaterialTheme.shapes.small,
                         ) {
                             Text(text = "Home Penerbit")
