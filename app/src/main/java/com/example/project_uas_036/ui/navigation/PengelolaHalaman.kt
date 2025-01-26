@@ -27,6 +27,14 @@ import com.example.project_uas_036.ui.view.Kategori.DetailKategoriViewScreen
 import com.example.project_uas_036.ui.view.Kategori.EntryKategoriScreen
 import com.example.project_uas_036.ui.view.Kategori.HomeKategoriScreen
 import com.example.project_uas_036.ui.view.Kategori.UpdateKategoriScreen
+import com.example.project_uas_036.ui.view.Penulis.DestinasiDetailPenulis
+import com.example.project_uas_036.ui.view.Penulis.DestinasiHomePenulis
+import com.example.project_uas_036.ui.view.Penulis.DestinasiTambahPenulis
+import com.example.project_uas_036.ui.view.Penulis.DestinasiUpdatePenulis
+import com.example.project_uas_036.ui.view.Penulis.DetailPenulisViewScreen
+import com.example.project_uas_036.ui.view.Penulis.EntryPenulisScreen
+import com.example.project_uas_036.ui.view.Penulis.HomePenulisScreen
+import com.example.project_uas_036.ui.view.Penulis.UpdatePenulisScreen
 
 @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
 @Composable
@@ -46,7 +54,10 @@ fun PengelolaHalaman(
                     // Navigasi ke Detail Buku dengan ID Buku sebagai parameter
                     navController.navigate("${DestinasiDetailBuku.route}/$idBuku")
                 },
-                navigateToHomeKategori = { navController.navigate(DestinasiHomeKategori.route)}
+                navigateToHomeKategori = { navController.navigate(DestinasiHomeKategori.route)},
+                navigateToHomePenulis = {
+                    navController.navigate(DestinasiHomePenulis.route)
+                },
 
             )
         }
@@ -167,6 +178,72 @@ fun PengelolaHalaman(
                 )
             }?: Log.e("Navigasi", "idKategori tidak diterima dengan benar!")
         }
+
+
+        ///          PENULIS
+
+
+
+        // Home Screen penulis
+        composable(DestinasiHomePenulis.route) {
+            HomePenulisScreen(
+                navigateToPenulisEntry = { navController.navigate(DestinasiTambahPenulis.route) },
+                navigateBack = { navController.popBackStack() },
+                onDetailPenulisClick = { idPenulis ->
+                    navController.navigate("${DestinasiDetailPenulis.route}/$idPenulis")
+                },
+                navigateToUpdatePenulis = { idPenulis ->
+                    navController.navigate("${DestinasiUpdatePenulis.route}/$idPenulis") // Add navigation for update
+                }
+            )
+        }
+
+        // Input Data (Tambah Penulis)
+        composable(DestinasiTambahPenulis.route) {
+            EntryPenulisScreen(navigateBack = {
+                navController.navigate(DestinasiHomePenulis.route) {
+                    // Menghapus semua halaman sebelumnya agar back ke Home langsung ke halaman utama
+                    popUpTo(DestinasiHomePenulis.route) { inclusive = true }
+                }
+            })
+        }
+
+        // Detail penulis (menerima ID penulis sebagai argument)
+        composable(
+            DestinasiDetailPenulis.routesWithArg,
+            arguments = listOf(navArgument(DestinasiDetailPenulis.id_penulis) {
+                type = NavType.StringType // Pastikan tipe argument sesuai
+            })
+        ) {
+            val idPenulis = it.arguments?.getString(DestinasiDetailPenulis.id_penulis)
+            idPenulis?.let { idPenulis ->
+                DetailPenulisViewScreen(
+                    navigateBack = {
+                        navController.navigate(DestinasiHomePenulis.route) {
+                            // Kembali ke halaman Home
+                            popUpTo(DestinasiHomePenulis.route) { inclusive = true }
+                        }
+                    }
+                )
+            }
+        }
+
+        // Update Penulis
+        composable(
+            DestinasiUpdatePenulis.routesWithArg,
+            arguments = listOf(navArgument(DestinasiUpdatePenulis.id_penulis) {
+                type = NavType.StringType // Pastikan tipe argument sesuai
+            })
+        ) {
+            val idpenulis = it.arguments?.getString(DestinasiUpdatePenulis.id_penulis)
+            idpenulis?.let { idpenulis ->
+                UpdatePenulisScreen(
+                    onBack = { navController.popBackStack() },
+                    onNavigate = { navController.popBackStack() }
+                )
+            }
+        }
+
 
     }
 }
