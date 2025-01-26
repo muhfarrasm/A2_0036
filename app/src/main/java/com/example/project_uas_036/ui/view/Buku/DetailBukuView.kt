@@ -48,7 +48,7 @@ fun DetailBukuViewScreen(
     navigateBack: () -> Unit,
     navigateToItemUpdate: () -> Unit,
     modifier: Modifier = Modifier,
-    navigateToDetailKategori: () -> Unit, // Mendeklarasikan parameter navigateToDetailKategori
+
     viewModel: DetailBukuViewModel = viewModel(factory = PenyediaViewModel.Factory)
 ) {
     Scaffold(
@@ -83,7 +83,7 @@ fun DetailBukuViewScreen(
             modifier = Modifier.padding(innerPadding),
             detailUiState = viewModel.bukuDetailState,
             retryAction = { viewModel.getMahasiswabyNim() },
-            navigateToDetailKategori = navigateToDetailKategori // Meneruskan parameter navigateToDetailKategori
+
         )
     }
 }
@@ -93,7 +93,7 @@ fun DetailBukuStatus(
     retryAction: () -> Unit,
     modifier: Modifier = Modifier,
     detailUiState: DetailUiState,
-    navigateToDetailKategori: () -> Unit // Menambahkan parameter navigateToDetailKategori
+
 ) {
     when (detailUiState) {
         is DetailUiState.Loading -> OnLoading(modifier = modifier.fillMaxSize())
@@ -106,7 +106,7 @@ fun DetailBukuStatus(
                 ItemDetailBuku(
                     buku = detailUiState.buku,
                     modifier = modifier.fillMaxWidth(),
-                    navigateToDetailKategori = navigateToDetailKategori // Meneruskan parameter navigateToDetailKategori
+
                 )
             }
         }
@@ -118,7 +118,7 @@ fun DetailBukuStatus(
 fun ItemDetailBuku(
     modifier: Modifier = Modifier,
     buku: Buku,
-    navigateToDetailKategori: () -> Unit // Menambahkan parameter navigateToDetailKategori
+
 ) {
     Card(
         modifier = modifier.padding(16.dp),
@@ -146,14 +146,7 @@ fun ItemDetailBuku(
             Spacer(modifier = Modifier.padding(5.dp))
             ComponentDetailMhs(judul = "Id Penulis", isinya = buku.id_penulis)
 
-            // Menambahkan tombol "Lebih Detail"
-            Spacer(modifier = Modifier.padding(10.dp))
-            FloatingActionButton(
-                onClick = navigateToDetailKategori, // Meneruskan parameter navigateToDetailKategori
-                modifier = Modifier.align(Alignment.CenterHorizontally)
-            ) {
-                Text(text = "Lebih Detail")
-            }
+
         }
     }
 }

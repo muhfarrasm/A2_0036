@@ -66,7 +66,7 @@ object DestinasiHomeBuku : DestinasiNavigasi {
 fun HomeBukuScreen(
     navigateToltemEntry: () -> Unit,
 
-    navigateToHomeKategori: () -> Unit,
+
     modifier: Modifier = Modifier,
     onDetailClick: (String) -> Unit = {},
     viewModel: HomeBukuViewModel = viewModel(factory = PenyediaViewModel.Factory)
@@ -98,12 +98,7 @@ fun HomeBukuScreen(
                     }
 
 
-                    Button(
-                        onClick = navigateToHomeKategori, // Meneruskan parameter navigateToDetailKategori
-                        shape = MaterialTheme.shapes.small,
-                    ) {
-                        Text(text = "Menu kategori")
-                    }
+
 
 
                 }
