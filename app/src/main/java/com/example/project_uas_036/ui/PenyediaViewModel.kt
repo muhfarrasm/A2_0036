@@ -17,6 +17,10 @@ import com.example.project_uas_036.ui.viewmodel.Kategori.DetailKategoriViewModel
 import com.example.project_uas_036.ui.viewmodel.Kategori.HomeKategoriViewModel
 import com.example.project_uas_036.ui.viewmodel.Kategori.InsertKategoriViewModel
 import com.example.project_uas_036.ui.viewmodel.Kategori.UpdateKategoriViewModel
+import com.example.project_uas_036.ui.viewmodel.Penulis.DetailPenulisViewModel
+import com.example.project_uas_036.ui.viewmodel.Penulis.HomePenulisViewModel
+import com.example.project_uas_036.ui.viewmodel.Penulis.InsertPenulisViewModel
+import com.example.project_uas_036.ui.viewmodel.Penulis.UpdatePenulisViewModel
 
 object PenyediaViewModel {
     @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
@@ -32,6 +36,13 @@ object PenyediaViewModel {
         initializer {
             Log.d("PenyediaViewModel", "Kategori Repository: ${aplikasiKontak().katcontainer.kontakKategoriRepository}")
             UpdateKategoriViewModel(createSavedStateHandle(),aplikasiKontak().katcontainer.kontakKategoriRepository) }
+
+        initializer { HomePenulisViewModel(aplikasiKontak().penuliscontainer.kontakPenulisRepository) }
+        initializer { InsertPenulisViewModel(aplikasiKontak().penuliscontainer.kontakPenulisRepository) }
+        initializer { UpdatePenulisViewModel(createSavedStateHandle(),aplikasiKontak().penuliscontainer.kontakPenulisRepository) }
+        initializer { DetailPenulisViewModel(createSavedStateHandle(),aplikasiKontak().penuliscontainer.kontakPenulisRepository) }
+
+
     }
 }
 fun CreationExtras.aplikasiKontak(): PerpusApp =
