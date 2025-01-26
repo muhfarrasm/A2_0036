@@ -66,7 +66,7 @@ object DestinasiHomeBuku : DestinasiNavigasi {
 fun HomeBukuScreen(
     navigateToltemEntry: () -> Unit,
 
-
+    navigateToHomeKategori: () -> Unit,
     modifier: Modifier = Modifier,
     onDetailClick: (String) -> Unit = {},
     viewModel: HomeBukuViewModel = viewModel(factory = PenyediaViewModel.Factory)
@@ -84,24 +84,48 @@ fun HomeBukuScreen(
                     ID = R.drawable.fae282ab40e04da8eed627a767815dc8
                 )
 
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 4.dp, vertical = 2.dp),
-                    horizontalArrangement = Arrangement.spacedBy(2.dp)
-                ) {
-                    Button(
-                        onClick = navigateToltemEntry,
-                        shape = MaterialTheme.shapes.small,
+                Column {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 10.dp, vertical = 2.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        Text(text = "Tambah Buku")
+                        Button(
+                            onClick = navigateToltemEntry,
+                            shape = MaterialTheme.shapes.small,
+                        ) {
+                            Text(text = "Tambah Buku")
+                        }
+                        Button(
+                            onClick = navigateToHomeKategori,
+                            shape = MaterialTheme.shapes.small,
+                        ) {
+                            Text(text = "Home Kategori")
+                        }
                     }
 
-
-
-
-
+                    Row (
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 10.dp, vertical = 2.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Button(
+                            onClick = navigateToltemEntry,
+                            shape = MaterialTheme.shapes.small,
+                        ) {
+                            Text(text = "Home Penulis")
+                        }
+                        Button(
+                            onClick = navigateToHomeKategori,
+                            shape = MaterialTheme.shapes.small,
+                        ) {
+                            Text(text = "Home Penerbit")
+                        }
+                    }
                 }
+
                 CoustumeTopAppBar(
                     title = DestinasiHomeBuku.titleRes,
                     canNavigateBack = false,
