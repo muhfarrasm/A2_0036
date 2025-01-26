@@ -1,3 +1,4 @@
 <resources>
+    <string name="loading">Loading</string>
     <string name="app_name">Project_UAS_036</string>
 </resources>
