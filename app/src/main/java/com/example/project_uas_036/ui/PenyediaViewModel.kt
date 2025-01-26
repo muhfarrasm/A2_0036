@@ -9,6 +9,7 @@ import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.project_uas_036.PerpusApp
+
 import com.example.project_uas_036.ui.viewmodel.Buku.DetailBukuViewModel
 import com.example.project_uas_036.ui.viewmodel.Buku.HomeBukuViewModel
 import com.example.project_uas_036.ui.viewmodel.Buku.InsertBukuViewModel
@@ -17,6 +18,9 @@ import com.example.project_uas_036.ui.viewmodel.Kategori.DetailKategoriViewModel
 import com.example.project_uas_036.ui.viewmodel.Kategori.HomeKategoriViewModel
 import com.example.project_uas_036.ui.viewmodel.Kategori.InsertKategoriViewModel
 import com.example.project_uas_036.ui.viewmodel.Kategori.UpdateKategoriViewModel
+import com.example.project_uas_036.ui.viewmodel.Penerbit.HomePenerbitViewModel
+import com.example.project_uas_036.ui.viewmodel.Penerbit.InsertPenerbitViewModel
+import com.example.project_uas_036.ui.viewmodel.Penerbit.UpdatePenebitViewModel
 import com.example.project_uas_036.ui.viewmodel.Penulis.DetailPenulisViewModel
 import com.example.project_uas_036.ui.viewmodel.Penulis.HomePenulisViewModel
 import com.example.project_uas_036.ui.viewmodel.Penulis.InsertPenulisViewModel
@@ -42,6 +46,9 @@ object PenyediaViewModel {
         initializer { UpdatePenulisViewModel(createSavedStateHandle(),aplikasiKontak().penuliscontainer.kontakPenulisRepository) }
         initializer { DetailPenulisViewModel(createSavedStateHandle(),aplikasiKontak().penuliscontainer.kontakPenulisRepository) }
 
+        initializer { HomePenerbitViewModel(aplikasiKontak().penerbitcontainer.kontakPenerbitRepository) }
+        initializer { InsertPenerbitViewModel(aplikasiKontak().penerbitcontainer.kontakPenerbitRepository) }
+        initializer { UpdatePenebitViewModel(createSavedStateHandle(),aplikasiKontak().penerbitcontainer.kontakPenerbitRepository) }
 
     }
 }
