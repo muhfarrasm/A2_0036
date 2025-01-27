@@ -30,7 +30,14 @@ object PenyediaViewModel {
     @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
     val Factory = viewModelFactory {
         initializer { HomeBukuViewModel(aplikasiKontak().bukcontainer.kontakRepository) }
-        initializer { InsertBukuViewModel(aplikasiKontak().bukcontainer.kontakRepository) }
+        initializer {
+            InsertBukuViewModel(
+                book = aplikasiKontak().bukcontainer.kontakRepository,
+                kat = aplikasiKontak().katcontainer.kontakKategoriRepository,
+                terbit = aplikasiKontak().penerbitcontainer.kontakPenerbitRepository,
+                penulis = aplikasiKontak().penuliscontainer.kontakPenulisRepository
+            )
+        }
         initializer { DetailBukuViewModel(createSavedStateHandle(),aplikasiKontak().bukcontainer.kontakRepository) }
         initializer { UpdateBukuViewModel(createSavedStateHandle(),aplikasiKontak().bukcontainer.kontakRepository) }
 
