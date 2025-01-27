@@ -19,6 +19,7 @@ import com.example.project_uas_036.ui.view.Buku.DetailBukuViewScreen
 import com.example.project_uas_036.ui.view.Buku.EntryBukuScreen
 import com.example.project_uas_036.ui.view.Buku.HomeBukuScreen
 import com.example.project_uas_036.ui.view.Buku.UpdateBukuScreen
+import com.example.project_uas_036.ui.view.DestinasiHomePage
 import com.example.project_uas_036.ui.view.Kategori.DestinasiDetailKategori
 import com.example.project_uas_036.ui.view.Kategori.DestinasiHomeKategori
 import com.example.project_uas_036.ui.view.Kategori.DestinasiTambahKategori
@@ -27,6 +28,7 @@ import com.example.project_uas_036.ui.view.Kategori.DetailKategoriViewScreen
 import com.example.project_uas_036.ui.view.Kategori.EntryKategoriScreen
 import com.example.project_uas_036.ui.view.Kategori.HomeKategoriScreen
 import com.example.project_uas_036.ui.view.Kategori.UpdateKategoriScreen
+import com.example.project_uas_036.ui.view.LibraryAppHomepage
 import com.example.project_uas_036.ui.view.Penerbit.DestinasiHomePenerbit
 import com.example.project_uas_036.ui.view.Penerbit.DestinasiTambahPenerbit
 import com.example.project_uas_036.ui.view.Penerbit.DestinasiUpdatePenerbit
@@ -49,9 +51,16 @@ fun PengelolaHalaman(
 ) {
     NavHost(
         navController = navController,
-        startDestination = DestinasiHomeBuku.route,
+        startDestination = DestinasiHomePage.route,
         modifier = Modifier
     ) {
+        composable(DestinasiHomePage.route) {
+            LibraryAppHomepage(
+                navigateToHomeBuku = {
+                    navController.navigate(DestinasiHomeBuku.route)
+                }
+            )
+        }
         // Home Screen(Buku)
         composable(DestinasiHomeBuku.route) {
             HomeBukuScreen(
