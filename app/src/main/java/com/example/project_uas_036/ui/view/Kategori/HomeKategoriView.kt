@@ -64,6 +64,7 @@ import com.example.project_uas_036.ui.viewmodel.Kategori.HomeKategoriViewModel
 object DestinasiHomeKategori : DestinasiNavigasi {
     override val route = "homekategori"
     override val titleRes = "Home Kategori"
+
 }
 
 @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
@@ -175,7 +176,7 @@ fun BottomNavBar(
                         tint = Color.White
                     )
                 }
-                Text(text = "Tambah Kategori", color = Color.White, style = MaterialTheme.typography.labelLarge)
+                Text(text = "Tambah Kategori", color = Color.White, style = MaterialTheme.typography.labelMedium)
             }
 
             // Second IconButton with text
@@ -192,7 +193,7 @@ fun BottomNavBar(
                         tint = Color.White
                     )
                 }
-                Text(text = "Home Buku", color = Color.White, style = MaterialTheme.typography.labelLarge)
+                Text(text = "Home Buku", color = Color.White, style = MaterialTheme.typography.labelMedium)
             }
 
             // Third IconButton with text
@@ -209,7 +210,7 @@ fun BottomNavBar(
                         tint = Color.White
                     )
                 }
-                Text(text = "Home Penulis", color = Color.White, style = MaterialTheme.typography.labelLarge)
+                Text(text = "Home Penulis", color = Color.White, style = MaterialTheme.typography.labelMedium)
             }
 
             // Fourth IconButton with text
@@ -226,7 +227,7 @@ fun BottomNavBar(
                         tint = Color.White
                     )
                 }
-                Text(text = "Home Penerbit", color = Color.White, style = MaterialTheme.typography.labelLarge)
+                Text(text = "Home Penerbit", color = Color.White, style = MaterialTheme.typography.labelMedium)
             }
         }
     }

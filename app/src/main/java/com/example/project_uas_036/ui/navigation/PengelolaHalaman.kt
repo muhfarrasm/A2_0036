@@ -110,6 +110,9 @@ fun PengelolaHalaman(
                             popUpTo(DestinasiHomeBuku.route) { inclusive = true }
                         }
                     },
+                    navigateToKategori = {
+                        navController.navigate(DestinasiHomeKategori.route)
+                    }
 
                 )
             }

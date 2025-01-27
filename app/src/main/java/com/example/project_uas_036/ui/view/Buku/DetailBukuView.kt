@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -48,6 +49,7 @@ fun DetailBukuViewScreen(
     navigateBack: () -> Unit,
     navigateToItemUpdate: () -> Unit,
     modifier: Modifier = Modifier,
+    navigateToKategori: (String) -> Unit,
 
     viewModel: DetailBukuViewModel = viewModel(factory = PenyediaViewModel.Factory)
 ) {
@@ -83,6 +85,7 @@ fun DetailBukuViewScreen(
             modifier = Modifier.padding(innerPadding),
             detailUiState = viewModel.bukuDetailState,
             retryAction = { viewModel.getMahasiswabyNim() },
+            navigateToKategori = navigateToKategori
 
         )
     }
@@ -93,6 +96,7 @@ fun DetailBukuStatus(
     retryAction: () -> Unit,
     modifier: Modifier = Modifier,
     detailUiState: DetailUiState,
+    navigateToKategori: (String) -> Unit
 
 ) {
     when (detailUiState) {
@@ -106,6 +110,7 @@ fun DetailBukuStatus(
                 ItemDetailBuku(
                     buku = detailUiState.buku,
                     modifier = modifier.fillMaxWidth(),
+                    navigateToKategori = navigateToKategori
 
                 )
             }
@@ -118,6 +123,7 @@ fun DetailBukuStatus(
 fun ItemDetailBuku(
     modifier: Modifier = Modifier,
     buku: Buku,
+    navigateToKategori: (String) -> Unit
 
 ) {
     Card(
@@ -146,6 +152,14 @@ fun ItemDetailBuku(
             Spacer(modifier = Modifier.padding(5.dp))
             ComponentDetailMhs(judul = "Id Penulis", isinya = buku.id_penulis)
 
+
+            // Tambahkan tombol di bawah card
+            Button(
+                onClick = { navigateToKategori(buku.id_kategori) },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(text = "Lihat Kategori", color = Color.White)
+            }
 
         }
     }

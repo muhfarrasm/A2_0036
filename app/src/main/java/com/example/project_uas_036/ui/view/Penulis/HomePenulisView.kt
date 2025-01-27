@@ -183,7 +183,7 @@ fun BottomNavBar(
                         tint = Color.White
                     )
                 }
-                Text(text = "Tambah Penulis", color = Color.White, style = MaterialTheme.typography.labelLarge)
+                Text(text = "Tambah Penulis", color = Color.White, style = MaterialTheme.typography.labelMedium)
             }
 
             // Second IconButton with text
@@ -200,7 +200,7 @@ fun BottomNavBar(
                         tint = Color.White
                     )
                 }
-                Text(text = "Home Buku", color = Color.White, style = MaterialTheme.typography.labelLarge)
+                Text(text = "Home Buku", color = Color.White, style = MaterialTheme.typography.labelMedium)
             }
 
             // Third IconButton with text
@@ -217,7 +217,7 @@ fun BottomNavBar(
                         tint = Color.White
                     )
                 }
-                Text(text = "Home Kategori", color = Color.White, style = MaterialTheme.typography.labelLarge)
+                Text(text = "Home Kategori", color = Color.White, style = MaterialTheme.typography.labelMedium)
             }
 
             // Fourth IconButton with text
@@ -234,7 +234,7 @@ fun BottomNavBar(
                         tint = Color.White
                     )
                 }
-                Text(text = "Home Penerbit", color = Color.White, style = MaterialTheme.typography.labelLarge)
+                Text(text = "Home Penerbit", color = Color.White, style = MaterialTheme.typography.labelMedium)
             }
         }
     }
