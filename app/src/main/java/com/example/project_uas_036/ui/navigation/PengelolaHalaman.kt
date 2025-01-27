@@ -221,9 +221,19 @@ fun PengelolaHalaman(
                 },
                 navigateToUpdatePenulis = { idPenulis ->
                     navController.navigate("${DestinasiUpdatePenulis.route}/$idPenulis") // Add navigation for update
+                },
+                navigateToHomeKategori = {
+                    navController.navigate(DestinasiHomeKategori.route)
+                },
+                navigateToHomePenerbit = {
+                    navController.navigate(DestinasiHomePenerbit.route)
+                },
+                navigateToHomeBuku = {
+                    navController.navigate(DestinasiHomeBuku.route)
                 }
             )
         }
+
 
         // Input Data (Tambah Penulis)
         composable(DestinasiTambahPenulis.route) {
@@ -281,6 +291,13 @@ fun PengelolaHalaman(
                 },
                 navigateToUpdatePenerbit = { idPenerbit ->
                     navController.navigate("${DestinasiUpdatePenerbit.route}/$idPenerbit") // Add navigation for update
+                },
+                navigateToHomeKategori = {
+                    navController.navigate(DestinasiHomeKategori.route)
+                },
+                navigateBack = { navController.popBackStack() },
+                navigateToHomePenulis = {
+                    navController.navigate(DestinasiHomePenulis.route)
                 }
             )
         }
