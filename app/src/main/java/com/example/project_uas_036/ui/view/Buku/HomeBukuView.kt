@@ -21,8 +21,12 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.MailOutline
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -39,10 +43,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -65,68 +71,32 @@ object DestinasiHomeBuku : DestinasiNavigasi {
 @Composable
 fun HomeBukuScreen(
     navigateToltemEntry: () -> Unit,
-    navigateToHomePenerbit: () -> Unit,
     navigateToHomePenulis: () -> Unit,
+    navigateToHomePenerbit: () -> Unit,
     navigateToHomeKategori: () -> Unit,
     modifier: Modifier = Modifier,
     onDetailClick: (String) -> Unit = {},
     viewModel: HomeBukuViewModel = viewModel(factory = PenyediaViewModel.Factory)
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+
+
+    // Scaffold utama
     Scaffold(
         modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
-
-            Column{
-
-                Spacer(modifier = Modifier.height(21.dp))
+            Column(
+                modifier = Modifier
+                    .background(Color(0xFF9FC5E8)) // Ganti dengan warna yang diinginkan
+                    .fillMaxWidth() // Membuat column mengisi lebar penuh
+            ) {
+                Spacer(modifier = Modifier.height(10.dp)) // Memberikan jarak atas
                 Header(
-                    namaApp = "Ayo Membaca",
-                    ID = R.drawable.buku
+                    namaApp = "EduLibApps",
+                    ID = R.drawable.toga
                 )
 
-                Column {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 10.dp, vertical = 2.dp),
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Button(
-                            onClick = navigateToltemEntry,
-                            shape = MaterialTheme.shapes.small,
-                        ) {
-                            Text(text = "Tambah Buku")
-                        }
-                        Button(
-                            onClick = navigateToHomeKategori,
-                            shape = MaterialTheme.shapes.small,
-                        ) {
-                            Text(text = "Home Kategori")
-                        }
-                    }
-
-                    Row (
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 10.dp, vertical = 2.dp),
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Button(
-                            onClick = navigateToHomePenulis,
-                            shape = MaterialTheme.shapes.small,
-                        ) {
-                            Text(text = "Home Penulis")
-                        }
-                        Button(
-                            onClick = navigateToHomePenerbit,
-                            shape = MaterialTheme.shapes.small,
-                        ) {
-                            Text(text = "Home Penerbit")
-                        }
-                    }
-                }
-
+                Spacer(modifier = Modifier.height(10.dp))
                 CoustumeTopAppBar(
                     title = DestinasiHomeBuku.titleRes,
                     canNavigateBack = false,
@@ -136,31 +106,138 @@ fun HomeBukuScreen(
                     }
                 )
             }
-
         },
 
+        // Navbar with buttons
+        bottomBar = {
+            BottomNavBar(
+                navigateToltemEntry = navigateToltemEntry,
+                navigateToHomeKategori = navigateToHomeKategori,
+                navigateToHomePenulis = navigateToHomePenulis,
+                navigateToHomePenerbit = navigateToHomePenerbit
+            )
+        }
 
-//        floatingActionButton = {
-//            FloatingActionButton(
-//                onClick = navigateToltemEntry,
-//                shape = MaterialTheme.shapes.medium,
-//                modifier = Modifier.padding(18.dp)
-//            ){
-//                Icon(imageVector = Icons.Default.Add, contentDescription = "Add Kontak")
-//            }
-//        },
-    ){ innerPadding ->
+    ) { innerPadding ->
+        // Menambahkan padding pada HomeStatus agar tidak tertutup
         HomeStatus(
             homeUiState = viewModel.BookUiState,
             retryAction = { viewModel.getBuku() },
-            modifier = Modifier.padding(innerPadding),
-            onDetailClick = onDetailClick, onDeleteClick = {
+            modifier = Modifier
+                .padding(innerPadding) // Menggunakan innerPadding untuk menyesuaikan konten utama
+                .padding(top = 8.dp) // Menambahkan sedikit jarak atas agar tidak tertutup topBar
+                .background(Color(0xFF9FC5E8)),
+            onDetailClick = onDetailClick,
+            onDeleteClick = {
                 viewModel.deleteBuku(it.id_buku)
                 viewModel.getBuku()
             }
         )
     }
 }
+
+@Composable
+fun BottomNavBar(
+    navigateToltemEntry: () -> Unit,
+    navigateToHomePenulis: () -> Unit,
+    navigateToHomePenerbit: () -> Unit,
+    navigateToHomeKategori: () -> Unit
+) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(0.dp)
+            .background(
+                brush = Brush.horizontalGradient(
+                    colors = listOf(
+                        Color(0xFF001880),
+                        Color(0xFF3055A3)
+                    )
+                ),
+                shape = CustomBottom()
+            )
+            .clip(MaterialTheme.shapes.medium)
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            // First IconButton with text
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                IconButton(
+                    onClick = navigateToltemEntry,
+                    modifier = Modifier.size(40.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Add,
+                        contentDescription = "Tambah Buku",
+                        tint = Color.White
+                    )
+                }
+                Text(text = "Tambah Buku", color = Color.White, style = MaterialTheme.typography.labelLarge)
+            }
+
+            // Second IconButton with text
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                IconButton(
+                    onClick = navigateToHomeKategori,
+                    modifier = Modifier.size(40.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Info,
+                        contentDescription = "Home Kategori",
+                        tint = Color.White
+                    )
+                }
+                Text(text = "Home Kategori", color = Color.White, style = MaterialTheme.typography.labelLarge)
+            }
+
+            // Third IconButton with text
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                IconButton(
+                    onClick = navigateToHomePenulis,
+                    modifier = Modifier.size(40.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Person,
+                        contentDescription = "Home Penulis",
+                        tint = Color.White
+                    )
+                }
+                Text(text = "Home Penulis", color = Color.White, style = MaterialTheme.typography.labelLarge)
+            }
+
+            // Fourth IconButton with text
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                IconButton(
+                    onClick = navigateToHomePenerbit,
+                    modifier = Modifier.size(40.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.MailOutline,
+                        contentDescription = "Home Penerbit",
+                        tint = Color.White
+                    )
+                }
+                Text(text = "Home Penerbit", color = Color.White, style = MaterialTheme.typography.labelLarge)
+            }
+        }
+    }
+}
+
+
+
+
 @Composable
 fun Header(
     namaApp: String,
@@ -169,13 +246,16 @@ fun Header(
     Box(
         modifier = Modifier
             .fillMaxWidth()
+            .padding(start = 1.dp, end = 1.dp)
             .background(
                 brush = Brush.horizontalGradient(
                     colors = listOf(
-                        Color(0xFF6700ff),
-                        Color(0xFF6700ff)
+                        Color(0xFF001880),
+                        Color(0xFF3055A3)
                     )
-                )
+                ),
+                shape = CustomTop()
+
             )
             .padding(16.dp)
     ) {
@@ -208,22 +288,33 @@ fun Header(
                         text = namaApp,
                         fontSize = 24.sp,
                         fontWeight = FontWeight.Bold,
+                        fontFamily = FontFamily.SansSerif,
                         color = Color.White
                     )
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Icon(
-                        imageVector = Icons.Default.Home,
-                        contentDescription = "ikon",
-                        tint = Color.White
-                    )
                 }
-
-                Spacer(modifier = Modifier.height(4.dp))
-
-
             }
         }
     }
+}
+
+@Composable
+fun CustomTop(): Shape {
+    return RoundedCornerShape(
+        topStart = 20.dp,  // Lengkungan pada pojok kiri atas
+        topEnd = 20.dp,    // Lengkungan pada pojok kanan atas
+        bottomStart = 20.dp, // Tidak ada lengkungan di pojok kiri bawah
+        bottomEnd = 20.dp    // Tidak ada lengkungan di pojok kanan bawah
+    )
+}
+
+@Composable
+fun CustomBottom(): Shape {
+    return RoundedCornerShape(
+        topStart = 20.dp,  // Lengkungan pada pojok kiri atas
+        topEnd = 20.dp,    // Lengkungan pada pojok kanan atas
+        bottomStart = 0.dp, // Tidak ada lengkungan di pojok kiri bawah
+        bottomEnd = 0.dp    // Tidak ada lengkungan di pojok kanan bawah
+    )
 }
 @Composable
 fun HomeStatus(
