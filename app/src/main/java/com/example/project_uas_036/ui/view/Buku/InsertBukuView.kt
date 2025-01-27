@@ -22,8 +22,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.project_uas_036.model.Kategori
+import com.example.project_uas_036.model.Penerbit
+import com.example.project_uas_036.model.Penulis
 import com.example.project_uas_036.ui.PenyediaViewModel
 import com.example.project_uas_036.ui.customwidget.CoustumeTopAppBar
+import com.example.project_uas_036.ui.customwidget.Dropdown
 import com.example.project_uas_036.ui.navigation.DestinasiNavigasi
 import com.example.project_uas_036.ui.viewmodel.Buku.InsertBukuViewModel
 import com.example.project_uas_036.ui.viewmodel.Buku.InsertUiEvent
@@ -67,6 +71,9 @@ fun EntryBukuScreen(
                     navigateBack()
                 }
             },
+            kategoriList = viewModel.kategoriList,
+            penulisList = viewModel.penulisList,
+            penerbitList = viewModel.penerbitList,
             modifier = Modifier
                 .padding(innerPadding)
                 .verticalScroll(rememberScrollState())
@@ -80,7 +87,10 @@ fun EntryBody(
     insertUiState: InsertUiState,
     onbookValueChange: (InsertUiEvent) -> Unit,
     onSaveClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    kategoriList: List<Kategori> = emptyList(),
+    penulisList: List<Penulis> = emptyList(),
+    penerbitList: List<Penerbit> = emptyList()
 ) {
     // Scroll state hanya dideklarasikan di dalam EntryBody
     //val scrollState = rememberScrollState()
@@ -96,6 +106,9 @@ fun EntryBody(
         FormInput(
             insertUiEvent = insertUiState.insertUiEvent,
             onValueChange = onbookValueChange,
+            kategoriList = kategoriList,
+            penulisList = penulisList,
+            penerbitList = penerbitList,
             modifier = Modifier.fillMaxWidth()
         )
         Button(
@@ -115,7 +128,10 @@ fun FormInput(
     insertUiEvent: InsertUiEvent,
     onValueChange: (InsertUiEvent) -> Unit,
     modifier: Modifier = Modifier,
-    enabled: Boolean = true
+    enabled: Boolean = true,
+    kategoriList: List<Kategori> = emptyList(),
+    penulisList: List<Penulis> = emptyList(),
+    penerbitList: List<Penerbit> = emptyList()
 ){
     Column(
         modifier = modifier,
@@ -162,41 +178,38 @@ fun FormInput(
             enabled = enabled,
             singleLine = true
         )
-        OutlinedTextField(
-            value = insertUiEvent.id_kategori,
-            onValueChange = { onValueChange(insertUiEvent.copy(id_kategori = it)) },
-            label = { Text("Id Kategori") },
-            modifier = Modifier.fillMaxWidth().offset(y = (-8).dp),
-            enabled = enabled,
-            singleLine = true
+        Dropdown(
+            selectedValue = kategoriList.find { it.idkategori == insertUiEvent.id_kategori }?.namaKategori
+                ?: "Pilih Kategori",
+            options = kategoriList.map { it.namaKategori },
+            label = "Kategori",
+            onValueChangedEvent = { selected ->
+                val selectedKategori = kategoriList.find { it.namaKategori == selected }
+                onValueChange(insertUiEvent.copy(id_kategori = selectedKategori?.idkategori ?: ""))
+            },
+            modifier = Modifier.fillMaxWidth()
         )
-
-        OutlinedTextField(
-            value = insertUiEvent.id_penulis,
-            onValueChange = { onValueChange(insertUiEvent.copy(id_penulis = it)) },
-            label = { Text("Id Penulis") },
-            modifier = Modifier.fillMaxWidth().offset(y = (-8).dp),
-            enabled = enabled,
-            singleLine = true
+        Dropdown(
+            selectedValue = penulisList.find { it.id_penulis == insertUiEvent.id_penulis }?.namaPenulis
+                ?: "Pilih Penulis",
+            options = penulisList.map { it.namaPenulis },
+            label = "Penulis",
+            onValueChangedEvent = { selected ->
+                val selectedPenulis = penulisList.find { it.namaPenulis == selected }
+                onValueChange(insertUiEvent.copy(id_penulis = selectedPenulis?.id_penulis ?: ""))
+            },
+            modifier = Modifier.fillMaxWidth()
         )
-
-        OutlinedTextField(
-            value = insertUiEvent.id_penerbit,
-            onValueChange = { onValueChange(insertUiEvent.copy(id_penerbit = it)) },
-            label = { Text("Id Penerbit") },
-            modifier = Modifier.fillMaxWidth().offset(y = (-8).dp),
-            enabled = enabled,
-            singleLine = true
+        Dropdown(
+            selectedValue = penerbitList.find { it.id_penerbit == insertUiEvent.id_penerbit }?.namaPenerbit
+                ?: "Pilih Penerbit",
+            options = penerbitList.map { it.namaPenerbit },
+            label = "Penerbit",
+            onValueChangedEvent = { selected ->
+                val selectedPenerbit = penerbitList.find { it.namaPenerbit == selected }
+                onValueChange(insertUiEvent.copy(id_penerbit = selectedPenerbit?.id_penerbit ?: ""))
+            },
+            modifier = Modifier.fillMaxWidth()
         )
-//        if(enabled) {
-//            Text(
-//                text = "Isi Semua Data!",
-//                modifier = Modifier.padding(8.dp)
-//            )
-//        }
-//        HorizontalDivider(
-//            modifier = Modifier.padding(5.dp),
-//            thickness = 8.dp
-//        )
     }
 }
