@@ -3,6 +3,7 @@ package com.example.project_uas_036.ui.view.Kategori
 import android.os.Build
 import androidx.annotation.RequiresExtension
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -12,13 +13,19 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.MailOutline
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -32,10 +39,18 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.project_uas_036.R
 import com.example.project_uas_036.model.Kategori
@@ -55,6 +70,9 @@ object DestinasiHomeKategori : DestinasiNavigasi {
 @Composable
 fun HomeKategoriScreen(
     navigateToKategoriEntry: () -> Unit,
+    navigateToHomePenulis: () -> Unit,
+    navigateToHomePenerbit: () -> Unit,
+    navigateToHomeBuku: () -> Unit,
     navigateBack: () -> Unit,
     modifier: Modifier = Modifier,
     onDetailClick: (String) -> Unit = {},
@@ -64,30 +82,45 @@ fun HomeKategoriScreen(
     Scaffold(
         modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
-            CoustumeTopAppBar(
-                title = DestinasiHomeKategori.titleRes,
-                canNavigateBack = true,
-                navigateUp = navigateBack,
-                scrollBehavior = scrollBehavior,
-                onRefresh = {
-                    viewModel.getKategori()
-                }
-            )
-        },
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = navigateToKategoriEntry,
-                shape = MaterialTheme.shapes.medium,
-                modifier = Modifier.padding(18.dp)
+            Column (
+                modifier = Modifier
+                    .background(Color(0xFF9FC5E8)) // Ganti dengan warna yang diinginkan
+                    .fillMaxWidth() // Membuat column mengisi lebar penuh
             ){
-                Icon(imageVector = Icons.Default.Add, contentDescription = "Add Kontak")
+                Spacer(modifier = Modifier.height(21.dp)) // Memberikan jarak atas
+                HeaderKategori(
+                    namaApp = "EduLibApps",
+                    ID = R.drawable.toga
+                )
+
+                CoustumeTopAppBar(
+                    title = DestinasiHomeKategori.titleRes,
+                    canNavigateBack = false,
+                    navigateUp = navigateBack,
+                    scrollBehavior = scrollBehavior,
+                    onRefresh = {
+                        viewModel.getKategori()
+                    }
+                )
             }
+
         },
+        // Navbar with buttons
+        bottomBar = {
+            BottomNavBar(
+                navigateToKategoriEntry = navigateToKategoriEntry,
+                navigateToHomeBuku = navigateToHomeBuku,
+                navigateToHomePenulis = navigateToHomePenulis,
+                navigateToHomePenerbit = navigateToHomePenerbit
+            )
+        }
     ){ innerPadding ->
         HomeStatus(
             homeUiState = viewModel.KateUiState,
             retryAction = { viewModel.getKategori() },
-            modifier = Modifier.padding(innerPadding),
+            modifier = Modifier.padding(innerPadding) // Menggunakan innerPadding untuk menyesuaikan konten utama
+                .padding(top = 2.dp) // Menambahkan sedikit jarak atas agar tidak tertutup topBar
+                .background(Color(0xFF9FC5E8)),
             onDetailClick = { kategoriId ->
                 onDetailClick(kategoriId) // Memanggil onDetailClick yang sesuai
             },
@@ -97,6 +130,187 @@ fun HomeKategoriScreen(
             }
         )
     }
+}
+
+@Composable
+fun BottomNavBar(
+    navigateToKategoriEntry: () -> Unit,
+    navigateToHomePenulis: () -> Unit,
+    navigateToHomePenerbit: () -> Unit,
+    navigateToHomeBuku: () -> Unit
+) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(0.dp)
+            .background(
+                brush = Brush.horizontalGradient(
+                    colors = listOf(
+                        Color(0xFF001880),
+                        Color(0xFF3055A3)
+                    )
+                ),
+                shape = CustomBottom()
+            )
+            .clip(MaterialTheme.shapes.medium)
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            // First IconButton with text
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                IconButton(
+                    onClick = navigateToKategoriEntry,
+                    modifier = Modifier.size(40.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Add,
+                        contentDescription = "Tambah Kategori",
+                        tint = Color.White
+                    )
+                }
+                Text(text = "Tambah Kategori", color = Color.White, style = MaterialTheme.typography.labelLarge)
+            }
+
+            // Second IconButton with text
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                IconButton(
+                    onClick = navigateToHomeBuku,
+                    modifier = Modifier.size(40.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Info,
+                        contentDescription = "Home Buku",
+                        tint = Color.White
+                    )
+                }
+                Text(text = "Home Buku", color = Color.White, style = MaterialTheme.typography.labelLarge)
+            }
+
+            // Third IconButton with text
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                IconButton(
+                    onClick = navigateToHomePenulis,
+                    modifier = Modifier.size(40.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Person,
+                        contentDescription = "Home Penulis",
+                        tint = Color.White
+                    )
+                }
+                Text(text = "Home Penulis", color = Color.White, style = MaterialTheme.typography.labelLarge)
+            }
+
+            // Fourth IconButton with text
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                IconButton(
+                    onClick = navigateToHomePenerbit,
+                    modifier = Modifier.size(40.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.MailOutline,
+                        contentDescription = "Home Penerbit",
+                        tint = Color.White
+                    )
+                }
+                Text(text = "Home Penerbit", color = Color.White, style = MaterialTheme.typography.labelLarge)
+            }
+        }
+    }
+}
+
+
+
+
+@Composable
+fun HeaderKategori(
+    namaApp: String,
+    ID: Int
+) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(start = 1.dp, end = 1.dp)
+            .background(
+                brush = Brush.horizontalGradient(
+                    colors = listOf(
+                        Color(0xFF001880),
+                        Color(0xFF3055A3)
+                    )
+                ),
+                shape = CustomTop()
+
+            )
+            .padding(16.dp)
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(80.dp)
+                    .clip(RoundedCornerShape(40.dp))
+                    .background(Color.White.copy(alpha = 0.3f))
+            ) {
+                Image(
+                    painter = painterResource(ID),
+                    contentDescription = "profil",
+                    modifier = Modifier
+                        .size(70.dp)
+                        .clip(RoundedCornerShape(35.dp))
+                        .align(Alignment.Center),
+                    contentScale = ContentScale.Crop
+                )
+            }
+
+            Spacer(modifier = Modifier.width(16.dp))
+
+            Column {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text(
+                        text = namaApp,
+                        fontSize = 24.sp,
+                        fontWeight = FontWeight.Bold,
+                        fontFamily = FontFamily.SansSerif,
+                        color = Color.White
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun CustomTop(): Shape {
+    return RoundedCornerShape(
+        topStart = 20.dp,  // Lengkungan pada pojok kiri atas
+        topEnd = 20.dp,    // Lengkungan pada pojok kanan atas
+        bottomStart = 20.dp, // Tidak ada lengkungan di pojok kiri bawah
+        bottomEnd = 20.dp    // Tidak ada lengkungan di pojok kanan bawah
+    )
+}
+
+@Composable
+fun CustomBottom(): Shape {
+    return RoundedCornerShape(
+        topStart = 20.dp,  // Lengkungan pada pojok kiri atas
+        topEnd = 20.dp,    // Lengkungan pada pojok kanan atas
+        bottomStart = 0.dp, // Tidak ada lengkungan di pojok kiri bawah
+        bottomEnd = 0.dp    // Tidak ada lengkungan di pojok kanan bawah
+    )
 }
 
 @Composable
@@ -203,11 +417,15 @@ fun kategoriCard(
     Card(
         modifier = modifier,
         shape = MaterialTheme.shapes.medium,
-        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
+
+            )
     ) {
         Column(
             modifier = Modifier
-                .padding(16.dp),
+                .padding(10.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             Row(

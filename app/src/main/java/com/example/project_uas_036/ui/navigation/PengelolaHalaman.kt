@@ -141,6 +141,15 @@ fun PengelolaHalaman(
                 navigateBack = { navController.popBackStack() },
                 onDetailClick = { idkategori ->
                     navController.navigate("${DestinasiDetailKategori.route}/$idkategori")
+                },
+                navigateToHomePenulis = {
+                    navController.navigate(DestinasiHomePenulis.route)
+                },
+                navigateToHomePenerbit = {
+                    navController.navigate(DestinasiHomePenerbit.route)
+                },
+                navigateToHomeBuku = {
+                    navController.navigate(DestinasiHomeBuku.route)
                 }
             )
         }
