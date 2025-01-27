@@ -167,7 +167,7 @@ fun FormInput(
         OutlinedTextField(
             value = insertPenerbitUiEvent.teleponPenerbit,
             onValueChange = { onValueChange(insertPenerbitUiEvent.copy(teleponPenerbit = it)) },
-            label = { Text("Biografi") },
+            label = { Text("Telepon") },
             modifier = Modifier.fillMaxWidth().offset(y = (-8).dp),
             enabled = enabled,
             singleLine = true

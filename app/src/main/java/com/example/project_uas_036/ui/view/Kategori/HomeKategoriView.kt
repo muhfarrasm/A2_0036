@@ -23,6 +23,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.MailOutline
 import androidx.compose.material.icons.filled.Person
@@ -87,12 +88,12 @@ fun HomeKategoriScreen(
                     .background(Color(0xFF9FC5E8)) // Ganti dengan warna yang diinginkan
                     .fillMaxWidth() // Membuat column mengisi lebar penuh
             ){
-                Spacer(modifier = Modifier.height(21.dp)) // Memberikan jarak atas
+                Spacer(modifier = Modifier.height(10.dp)) // Memberikan jarak atas
                 HeaderKategori(
                     namaApp = "EduLibApps",
-                    ID = R.drawable.toga
+                    ID = R.drawable.toga_buku
                 )
-
+                Spacer(modifier = Modifier.height(10.dp))
                 CoustumeTopAppBar(
                     title = DestinasiHomeKategori.titleRes,
                     canNavigateBack = false,
@@ -119,7 +120,7 @@ fun HomeKategoriScreen(
             homeUiState = viewModel.KateUiState,
             retryAction = { viewModel.getKategori() },
             modifier = Modifier.padding(innerPadding) // Menggunakan innerPadding untuk menyesuaikan konten utama
-                .padding(top = 2.dp) // Menambahkan sedikit jarak atas agar tidak tertutup topBar
+                .padding(top = 8.dp) // Menambahkan sedikit jarak atas agar tidak tertutup topBar
                 .background(Color(0xFF9FC5E8)),
             onDetailClick = { kategoriId ->
                 onDetailClick(kategoriId) // Memanggil onDetailClick yang sesuai
@@ -186,7 +187,7 @@ fun BottomNavBar(
                     modifier = Modifier.size(40.dp)
                 ) {
                     Icon(
-                        imageVector = Icons.Default.Info,
+                        imageVector = Icons.Default.Home,
                         contentDescription = "Home Buku",
                         tint = Color.White
                     )
@@ -426,7 +427,7 @@ fun kategoriCard(
         Column(
             modifier = Modifier
                 .padding(10.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+            verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),

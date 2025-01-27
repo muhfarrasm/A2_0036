@@ -21,12 +21,18 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.MailOutline
+import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -37,10 +43,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -56,7 +64,7 @@ import com.example.project_uas_036.ui.viewmodel.Penerbit.HomePenerbitViewModel
 
 object DestinasiHomePenerbit : DestinasiNavigasi {
     override val route = "homepenerbit"
-    override val titleRes = "Beranda Penerbit"
+    override val titleRes = "Home Penerbit"
 
 }
 
@@ -65,8 +73,10 @@ object DestinasiHomePenerbit : DestinasiNavigasi {
 @Composable
 fun HomePenerbitScreen(
     navigateToPenerbitEntry: () -> Unit,
-    // navigateToHomePenerbit: () -> Unit,
     navigateToHomeBuku: () -> Unit,
+    navigateToHomeKategori: () -> Unit,
+    navigateToHomePenulis: () -> Unit,
+    navigateBack: () -> Unit,
     modifier: Modifier = Modifier,
     navigateToUpdatePenerbit: (String) -> Unit,
     viewModel: HomePenerbitViewModel = viewModel(factory = PenyediaViewModel.Factory)
@@ -75,39 +85,21 @@ fun HomePenerbitScreen(
     Scaffold(
         modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
-
-            Column{
-
-                Spacer(modifier = Modifier.height(21.dp))
-                Header(
-                    namaApp = "Ayo Membaca",
-                    ID = R.drawable.fae282ab40e04da8eed627a767815dc8
+            Column (
+                modifier = Modifier
+                    .background(Color(0xFF9FC5E8)) // Ganti dengan warna yang diinginkan
+                    .fillMaxWidth() // Membuat column mengisi lebar penuh
+            ){
+                Spacer(modifier = Modifier.height(10.dp)) // Memberikan jarak atas
+                HeaderPenerbit(
+                    namaApp = "EduLibApps",
+                    ID = R.drawable.toga_buku
                 )
-
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 4.dp, vertical = 2.dp),
-                    horizontalArrangement = Arrangement.spacedBy(2.dp)
-                ) {
-                    Button(
-                        onClick = navigateToPenerbitEntry,
-                        shape = MaterialTheme.shapes.small,
-                    ) {
-                        Text(text = "Tambah Penerbit")
-                    }
-                    Button(
-                        onClick = navigateToHomeBuku, // Meneruskan parameter navigateToDetailKategori
-                        shape = MaterialTheme.shapes.small,
-                    ) {
-                        Text(text = "Menu Buku")
-                    }
-                }
-
-                Spacer(modifier = Modifier)
+                Spacer(modifier = Modifier.height(10.dp))
                 CoustumeTopAppBar(
                     title = DestinasiHomePenerbit.titleRes,
                     canNavigateBack = false,
+                    navigateUp = navigateBack,
                     scrollBehavior = scrollBehavior,
                     onRefresh = {
                         viewModel.getPenerbit()
@@ -116,31 +108,144 @@ fun HomePenerbitScreen(
             }
 
         },
+        // Navbar with buttons
+        bottomBar = {
+            BottomNavBar(
+                navigateToPenerbitEntry = navigateToPenerbitEntry,
+                navigateToHomeBuku = navigateToHomeBuku,
+                navigateToHomePenulis = navigateToHomePenulis,
+                navigateToHomeKategori = navigateToHomeKategori
+            )
+        }
 
-        ){ innerPadding ->
+    ){ innerPadding ->
         HomeStatus(
             homeUiState = viewModel.PeneUiState,
             retryAction = { viewModel.getPenerbit() },
-            modifier = Modifier.padding(innerPadding),
+            modifier = Modifier.padding(innerPadding) // Menggunakan innerPadding untuk menyesuaikan konten utama
+                .padding(top = 8.dp) // Menambahkan sedikit jarak atas agar tidak tertutup topBar
+                .background(Color(0xFF9FC5E8)),
             onDetailClick = navigateToUpdatePenerbit,
         )
     }
 }
 @Composable
-fun Header(
+fun BottomNavBar(
+    navigateToPenerbitEntry: () -> Unit,
+    navigateToHomePenulis: () -> Unit,
+    navigateToHomeKategori: () -> Unit,
+    navigateToHomeBuku: () -> Unit
+) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(0.dp)
+            .background(
+                brush = Brush.horizontalGradient(
+                    colors = listOf(
+                        Color(0xFF001880),
+                        Color(0xFF3055A3)
+                    )
+                ),
+                shape = CustomBottom()
+            )
+            .clip(MaterialTheme.shapes.medium)
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            // First IconButton with text
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                IconButton(
+                    onClick = navigateToPenerbitEntry,
+                    modifier = Modifier.size(40.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Add,
+                        contentDescription = "Tambah Penerbit",
+                        tint = Color.White
+                    )
+                }
+                Text(text = "Tambah Penerbit", color = Color.White, style = MaterialTheme.typography.labelLarge)
+            }
+
+            // Second IconButton with text
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                IconButton(
+                    onClick = navigateToHomeBuku,
+                    modifier = Modifier.size(40.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Home,
+                        contentDescription = "Home Buku",
+                        tint = Color.White
+                    )
+                }
+                Text(text = "Home Buku", color = Color.White, style = MaterialTheme.typography.labelLarge)
+            }
+
+            // Third IconButton with text
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                IconButton(
+                    onClick = navigateToHomePenulis,
+                    modifier = Modifier.size(40.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Person,
+                        contentDescription = "Home Penulis",
+                        tint = Color.White
+                    )
+                }
+                Text(text = "Home Penulis", color = Color.White, style = MaterialTheme.typography.labelLarge)
+            }
+
+            // Fourth IconButton with text
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                IconButton(
+                    onClick = navigateToHomeKategori,
+                    modifier = Modifier.size(40.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Menu,
+                        contentDescription = "Home Kategori",
+                        tint = Color.White
+                    )
+                }
+                Text(text = "Home Kategori", color = Color.White, style = MaterialTheme.typography.labelLarge)
+            }
+        }
+    }
+}
+
+@Composable
+fun HeaderPenerbit(
     namaApp: String,
     ID: Int
 ) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
+            .padding(start = 1.dp, end = 1.dp)
             .background(
                 brush = Brush.horizontalGradient(
                     colors = listOf(
-                        Color(0xFF6700ff),
-                        Color(0xFF6700ff)
+                        Color(0xFF001880),
+                        Color(0xFF3055A3)
                     )
-                )
+                ),
+                shape = CustomTop()
+
             )
             .padding(16.dp)
     ) {
@@ -173,22 +278,33 @@ fun Header(
                         text = namaApp,
                         fontSize = 24.sp,
                         fontWeight = FontWeight.Bold,
+                        fontFamily = FontFamily.SansSerif,
                         color = Color.White
                     )
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Icon(
-                        imageVector = Icons.Default.Home,
-                        contentDescription = "ikon",
-                        tint = Color.White
-                    )
                 }
-
-                Spacer(modifier = Modifier.height(4.dp))
-
-
             }
         }
     }
+}
+
+@Composable
+fun CustomTop(): Shape {
+    return RoundedCornerShape(
+        topStart = 20.dp,  // Lengkungan pada pojok kiri atas
+        topEnd = 20.dp,    // Lengkungan pada pojok kanan atas
+        bottomStart = 20.dp, // Tidak ada lengkungan di pojok kiri bawah
+        bottomEnd = 20.dp    // Tidak ada lengkungan di pojok kanan bawah
+    )
+}
+
+@Composable
+fun CustomBottom(): Shape {
+    return RoundedCornerShape(
+        topStart = 20.dp,  // Lengkungan pada pojok kiri atas
+        topEnd = 20.dp,    // Lengkungan pada pojok kanan atas
+        bottomStart = 0.dp, // Tidak ada lengkungan di pojok kiri bawah
+        bottomEnd = 0.dp    // Tidak ada lengkungan di pojok kanan bawah
+    )
 }
 @Composable
 fun HomeStatus(
@@ -276,7 +392,11 @@ fun PenerbitCard(
     Card(
         modifier = modifier,
         shape = MaterialTheme.shapes.medium,
-        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
+
+            )
     ) {
         Column(
             modifier = Modifier
@@ -291,10 +411,11 @@ fun PenerbitCard(
                     text = penerbit.id_penerbit,
                     style = MaterialTheme.typography.titleLarge
                 )
-
+                Spacer(Modifier.weight(1f))
                 Text(
                     text = penerbit.namaPenerbit,
-                    style = MaterialTheme.typography.titleMedium
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold
                 )
             }
             Text(
