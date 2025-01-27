@@ -13,7 +13,12 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -25,11 +30,18 @@ fun CoustumeTopAppBar(
     navigateUp: () -> Unit = {},
     onRefresh: () -> Unit = {},
 ) {
+    // Define the custom text style
+    val customTextStyle = TextStyle(
+        fontFamily = FontFamily.SansSerif, // You can replace this with a custom font family
+        fontWeight = FontWeight.Bold, // Set the font weight
+        fontSize = 23.sp, // Set the font size
+        color = Color.Black // Set the font color
+    )
     CenterAlignedTopAppBar(
         title = {
             Text(
                 text = title,
-                modifier = Modifier.offset(1.dp) // Adjust this value as needed
+                style = customTextStyle
             )
         },
         actions = {

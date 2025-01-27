@@ -93,7 +93,7 @@ fun HomeBukuScreen(
                 Spacer(modifier = Modifier.height(10.dp)) // Memberikan jarak atas
                 Header(
                     namaApp = "EduLibApps",
-                    ID = R.drawable.toga
+                    ID = R.drawable.toga_buku
                 )
 
                 Spacer(modifier = Modifier.height(10.dp))
@@ -407,7 +407,12 @@ fun bukuCard(
     Card(
         modifier = modifier,
         shape = MaterialTheme.shapes.medium,
-        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
+
+            )
+
     ) {
         Column(
             modifier = Modifier
@@ -430,16 +435,16 @@ fun bukuCard(
                     )
                 }
                 Text(
-                    text = buku.nama_buku,
+                    text = buku.status_buku,
                     style = MaterialTheme.typography.titleMedium
                 )
             }
             Text(
-                text = buku.tanggal_terbit,
+                text = buku.nama_buku,
                 style = MaterialTheme.typography.titleMedium
             )
             Text(
-                text = buku.status_buku,
+                text = buku.tanggal_terbit,
                 style = MaterialTheme.typography.titleMedium
             )
         }
