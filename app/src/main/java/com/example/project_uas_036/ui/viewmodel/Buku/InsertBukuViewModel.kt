@@ -6,21 +6,45 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.project_uas_036.model.Buku
+import com.example.project_uas_036.model.Kategori
+import com.example.project_uas_036.model.Penerbit
+import com.example.project_uas_036.model.Penulis
 import com.example.project_uas_036.repository.BukuRepository
+import com.example.project_uas_036.repository.KategoriRepository
+import com.example.project_uas_036.repository.PenerbitRepository
+import com.example.project_uas_036.repository.PenulisRepository
 import kotlinx.coroutines.launch
 
-class InsertBukuViewModel(private val book: BukuRepository): ViewModel() {
+class InsertBukuViewModel(
+    private val book: BukuRepository,
+    private val kat: KategoriRepository,
+    private val terbit: PenerbitRepository,
+    private val penulis: PenulisRepository
+): ViewModel() {
     var uiState by mutableStateOf(InsertUiState())
         private set
 
-//    // Tambahkan variabel untuk menyimpan daftar kategori
-//    var listKategori by mutableStateOf<List<Kategori>>(emptyList())
-//        private set
+    var kategoriList by mutableStateOf<List<Kategori>>(emptyList())
+    var penulisList by mutableStateOf<List<Penulis>>(emptyList())
+    var penerbitList by mutableStateOf<List<Penerbit>>(emptyList())
 
-//    init {
-//        // Panggil fungsi untuk mendapatkan kategori saat ViewModel diinisialisasi
-//        fetchKategori()
-//    }
+
+    init {
+        // Panggil fungsi untuk mendapatkan kategori,penulis,penerbit saat ViewModel diinisialisasi
+        loadkategoripenulispenerbit()
+    }
+
+    private fun loadkategoripenulispenerbit() {
+        viewModelScope.launch {
+            try {
+                kategoriList = kat.getKategori().data
+                penulisList = penulis.getPenulis().data
+                penerbitList = terbit.getPenerbit().data
+            } catch (e: Exception) {
+
+            }
+        }
+    }
 
     fun updateInsertBukuState(insertUiEvent: InsertUiEvent) {
         uiState = InsertUiState(insertUiEvent = insertUiEvent)
@@ -36,20 +60,17 @@ class InsertBukuViewModel(private val book: BukuRepository): ViewModel() {
             }
         }
     }
+    fun isValidState(): Boolean {
+        val event = uiState.insertUiEvent
+        return event.nama_buku.isNotBlank() &&
+                event.deskripsi_buku.isNotBlank() &&
+                event.tanggal_terbit.isNotBlank() &&
+                event.status_buku.isNotBlank() &&
+                event.id_kategori.isNotBlank() &&
+                event.id_penulis.isNotBlank() &&
+                event.id_penerbit.isNotBlank()
+    }
 
-//    // Fungsi untuk mengambil data kategori
-//    private fun fetchKategori() {
-//        viewModelScope.launch {
-//            try {
-//                // Ambil kategori dan simpan dalam listKategori
-//                book.getKategori().collect { kategoriList ->
-//                    listKategori = kategoriList
-//                }
-//            } catch (e: Exception) {
-//                e.printStackTrace()
-//            }
-//        }
-//    }
 }
 
 // Data class untuk UI state
