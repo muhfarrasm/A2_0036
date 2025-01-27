@@ -82,7 +82,7 @@ fun HomeBukuScreen(
                 Spacer(modifier = Modifier.height(21.dp))
                 Header(
                     namaApp = "Ayo Membaca",
-                    ID = R.drawable.fae282ab40e04da8eed627a767815dc8
+                    ID = R.drawable.buku
                 )
 
                 Column {
