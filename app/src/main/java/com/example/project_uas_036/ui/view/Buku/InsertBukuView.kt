@@ -177,8 +177,11 @@ fun FormInput(
             label = { Text("Status") },
             modifier = Modifier.fillMaxWidth().offset(y = (-8).dp),
             enabled = enabled,
-            singleLine = true
+            singleLine = true,
+
+
         )
+
         Dropdown(
             selectedValue = kategoriList.find { it.idkategori == insertUiEvent.id_kategori }?.namaKategori
                 ?: "Pilih Kategori",

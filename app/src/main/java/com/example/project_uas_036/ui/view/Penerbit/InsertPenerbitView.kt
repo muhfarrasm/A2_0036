@@ -116,6 +116,7 @@ fun EntryBody(
                     onSaveClick()
                 }
             },
+
             shape = MaterialTheme.shapes.small,
             modifier = Modifier
                 .fillMaxWidth()
@@ -132,56 +133,80 @@ fun FormInput(
     insertPenerbitUiEvent: InsertPenerbitUiEvent,
     onValueChange: (InsertPenerbitUiEvent) -> Unit,
     modifier: Modifier = Modifier,
-    enabled: Boolean = true
-){
+    enabled: Boolean = true,
+    errorMessages: Map<String, String> = emptyMap()
+) {
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(8.dp)
-
-    ){
+    ) {
         OutlinedTextField(
             value = insertPenerbitUiEvent.id_penerbit,
             onValueChange = { onValueChange(insertPenerbitUiEvent.copy(id_penerbit = it)) },
             label = { Text("Id Penerbit") },
+            isError = errorMessages.containsKey("id_penerbit"),
             modifier = Modifier.fillMaxWidth().offset(y = (-8).dp),
             enabled = enabled,
             singleLine = true
         )
+        if (errorMessages.containsKey("id_penerbit")) {
+            Text(
+                text = errorMessages["id_penerbit"] ?: "",
+                color = MaterialTheme.colorScheme.error,
+                style = MaterialTheme.typography.bodySmall
+            )
+        }
+
         OutlinedTextField(
             value = insertPenerbitUiEvent.namaPenerbit,
             onValueChange = { onValueChange(insertPenerbitUiEvent.copy(namaPenerbit = it)) },
             label = { Text("Nama Penerbit") },
+            isError = errorMessages.containsKey("namaPenerbit"),
             modifier = Modifier.fillMaxWidth().offset(y = (-8).dp),
             enabled = enabled,
             singleLine = true
         )
+        if (errorMessages.containsKey("namaPenerbit")) {
+            Text(
+                text = errorMessages["namaPenerbit"] ?: "",
+                color = MaterialTheme.colorScheme.error,
+                style = MaterialTheme.typography.bodySmall
+            )
+        }
+
         OutlinedTextField(
             value = insertPenerbitUiEvent.alamatPenerbit,
             onValueChange = { onValueChange(insertPenerbitUiEvent.copy(alamatPenerbit = it)) },
             label = { Text("Alamat") },
+            isError = errorMessages.containsKey("alamatPenerbit"),
             modifier = Modifier.fillMaxWidth().offset(y = (-8).dp),
             enabled = enabled,
             singleLine = true
         )
+        if (errorMessages.containsKey("alamatPenerbit")) {
+            Text(
+                text = errorMessages["alamatPenerbit"] ?: "",
+                color = MaterialTheme.colorScheme.error,
+                style = MaterialTheme.typography.bodySmall
+            )
+        }
 
         OutlinedTextField(
             value = insertPenerbitUiEvent.teleponPenerbit,
             onValueChange = { onValueChange(insertPenerbitUiEvent.copy(teleponPenerbit = it)) },
-            label = { Text("Telepon") },
+            label = { Text("Telepon Penerbit") },
+            isError = errorMessages.containsKey("teleponPenerbit"),
             modifier = Modifier.fillMaxWidth().offset(y = (-8).dp),
             enabled = enabled,
             singleLine = true
         )
-
-        if(enabled) {
+        if (errorMessages.containsKey("teleponPenerbit")) {
             Text(
-                text = "Isi Semua Data!",
-                modifier = Modifier.padding(8.dp)
+                text = errorMessages["teleponPenerbit"] ?: "",
+                color = MaterialTheme.colorScheme.error,
+                style = MaterialTheme.typography.bodySmall
             )
         }
-        HorizontalDivider(
-            modifier = Modifier.padding(5.dp),
-            thickness = 8.dp
-        )
+
     }
 }

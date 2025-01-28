@@ -13,8 +13,35 @@ class InsertPenerbitViewModel(private val terbit: PenerbitRepository): ViewModel
     var PeneUiState by mutableStateOf(InsertPenerbitUiState())
         private set
 
+    var errorMessages by mutableStateOf(emptyMap<String, String>())
+        private set
+
     fun updateInsertPenerbitState(insertUiEvent: InsertPenerbitUiEvent) {
         PeneUiState = InsertPenerbitUiState(insertPenerbitUiEvent = insertUiEvent)
+    }
+
+    private fun validateInput(): Boolean {
+        val errors = mutableMapOf<String, String>()
+
+        with(PeneUiState.insertPenerbitUiEvent) {
+            if (id_penerbit.isBlank()) {
+                errors["id_penerbit"] = "ID Penerbit tidak boleh kosong"
+            }
+            if (namaPenerbit.isBlank()) {
+                errors["namaPenerbit"] = "Nama Penerbit tidak boleh kosong"
+            }
+            if (alamatPenerbit.isBlank()) {
+                errors["alamatPenerbit"] = "Alamat Penerbit tidak boleh kosong"
+            }
+            if (teleponPenerbit.isBlank()) {
+                errors["teleponPenerbit"] = "Telepon Penerbit tidak boleh kosong"
+            } else if (!teleponPenerbit.matches("^08\\d{8,12}\$".toRegex())) {
+                errors["teleponPenerbit"] = "Nomor telepon harus dimulai dengan '08' dan terdiri dari 10-13 digit"
+            }
+        }
+
+        errorMessages = errors
+        return errors.isEmpty()
     }
 
     suspend fun insertPenerbit() {
