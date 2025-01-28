@@ -22,12 +22,16 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.MailOutline
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -381,8 +385,8 @@ fun BukuLayout(
 ){
     LazyColumn(
         modifier = modifier,
-        contentPadding = PaddingValues(16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+        contentPadding = PaddingValues(10.dp),
+        verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
         items(buku){kontak ->
             bukuCard(
@@ -411,43 +415,88 @@ fun bukuCard(
         elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
-
-            )
-
+        )
     ) {
         Column(
             modifier = Modifier
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
+            // Row for ID Buku and Delete Button
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
+                Icon(
+                    imageVector = Icons.Default.Star, // Replace with appropriate icon
+                    contentDescription = "ID Buku",
+                    modifier = Modifier.size(20.dp),
+                    tint = MaterialTheme.colorScheme.primary
+                )
+                Spacer(Modifier.width(8.dp))
                 Text(
                     text = buku.id_buku,
-                    style = MaterialTheme.typography.titleLarge
+                    style = MaterialTheme.typography.titleMedium
                 )
-                Spacer(Modifier.weight(1f))
+                Spacer(Modifier.weight(0.7f))
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Notifications, // Replace with appropriate icon
+                        contentDescription = "Status Buku",
+                        modifier = Modifier.size(20.dp),
+                        tint = MaterialTheme.colorScheme.primary
+                    )
+                    Spacer(Modifier.width(8.dp))
+                    Text(
+                        text = buku.status_buku,
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+                Spacer(Modifier.weight(0.3f))
                 IconButton(onClick = { onDeleteClick(buku) }) {
                     Icon(
                         imageVector = Icons.Default.Delete,
-                        contentDescription = null,
+                        contentDescription = "Delete Buku",
+                        tint = MaterialTheme.colorScheme.error
                     )
                 }
+            }
+            // Row for Nama Buku
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Home, // Replace with appropriate icon
+                    contentDescription = "Nama Buku",
+                    modifier = Modifier.size(20.dp),
+                    tint = MaterialTheme.colorScheme.primary
+                )
+                Spacer(Modifier.width(8.dp))
                 Text(
-                    text = buku.status_buku,
+                    text = buku.nama_buku,
                     style = MaterialTheme.typography.titleMedium
                 )
             }
-            Text(
-                text = buku.nama_buku,
-                style = MaterialTheme.typography.titleMedium
-            )
-            Text(
-                text = buku.tanggal_terbit,
-                style = MaterialTheme.typography.titleMedium
-            )
+
+            // Row for Tanggal Terbit
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    imageVector = Icons.Default.DateRange, // Replace with appropriate icon
+                    contentDescription = "Tanggal Terbit",
+                    modifier = Modifier.size(20.dp),
+                    tint = MaterialTheme.colorScheme.primary
+                )
+                Spacer(Modifier.width(8.dp))
+                Text(
+                    text = buku.tanggal_terbit,
+                    style = MaterialTheme.typography.titleMedium
+                )
+            }
         }
     }
 }

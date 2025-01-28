@@ -22,11 +22,15 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.MailOutline
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Phone
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -387,46 +391,84 @@ fun PenerbitLayout(
 fun PenerbitCard(
     penerbit: Penerbit,
     modifier: Modifier = Modifier,
-
-    ) {
+) {
     Card(
         modifier = modifier,
         shape = MaterialTheme.shapes.medium,
         elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
-
-            )
+            containerColor = MaterialTheme.colorScheme.surfaceContainerHigh
+        )
     ) {
         Column(
             modifier = Modifier
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
+            // Row for the id_penerbit and namaPenerbit
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
+                // Id Penerbit Icon and Text
+                Icon(
+                    imageVector = Icons.Default.Star, // Replace with the appropriate icon
+                    contentDescription = "ID Penerbit",
+                    modifier = Modifier.size(20.dp),
+                    tint = MaterialTheme.colorScheme.primary
+                )
+                Spacer(Modifier.width(8.dp)) // Spacer between the icon and text
                 Text(
                     text = penerbit.id_penerbit,
-                    style = MaterialTheme.typography.titleLarge
+                    style = MaterialTheme.typography.titleMedium
                 )
                 Spacer(Modifier.weight(1f))
+                // Nama Penerbit Icon and Text
+                Icon(
+                    imageVector = Icons.Default.Person, // Replace with the appropriate icon
+                    contentDescription = "Nama Penerbit",
+                    modifier = Modifier.size(20.dp),
+                    tint = MaterialTheme.colorScheme.onPrimaryContainer
+                )
+                Spacer(Modifier.width(8.dp))
                 Text(
                     text = penerbit.namaPenerbit,
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold
                 )
             }
-            Text(
-                text = penerbit.teleponPenerbit,
-                style = MaterialTheme.typography.titleMedium
-            )
-            Text(
-                text = penerbit.alamatPenerbit,
-                style = MaterialTheme.typography.titleMedium
-            )
+            // Telepon Penerbit with Icon
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Phone, // Replace with the appropriate icon
+                    contentDescription = "Telepon Penerbit",
+                    modifier = Modifier.size(20.dp),
+                    tint = MaterialTheme.colorScheme.primary
+                )
+                Spacer(Modifier.width(8.dp))
+                Text(
+                    text = penerbit.teleponPenerbit,
+                    style = MaterialTheme.typography.titleMedium
+                )
+            }
+            // Alamat Penerbit with Icon
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    imageVector = Icons.Default.LocationOn, // Replace with the appropriate icon
+                    contentDescription = "Alamat Penerbit",
+                    modifier = Modifier.size(20.dp),
+                    tint = MaterialTheme.colorScheme.primary
+                )
+                Spacer(Modifier.width(8.dp))
+                Text(
+                    text = penerbit.alamatPenerbit,
+                    style = MaterialTheme.typography.titleMedium
+                )
+            }
         }
     }
 }
-

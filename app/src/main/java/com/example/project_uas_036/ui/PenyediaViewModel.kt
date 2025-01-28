@@ -38,8 +38,21 @@ object PenyediaViewModel {
                 penulis = aplikasiKontak().penuliscontainer.kontakPenulisRepository
             )
         }
-        initializer { DetailBukuViewModel(createSavedStateHandle(),aplikasiKontak().bukcontainer.kontakRepository) }
-        initializer { UpdateBukuViewModel(createSavedStateHandle(),aplikasiKontak().bukcontainer.kontakRepository) }
+        initializer {
+            DetailBukuViewModel(createSavedStateHandle(),
+            book = aplikasiKontak().bukcontainer.kontakRepository,
+            kat = aplikasiKontak().katcontainer.kontakKategoriRepository,
+            terbit = aplikasiKontak().penerbitcontainer.kontakPenerbitRepository,
+            tulis = aplikasiKontak().penuliscontainer.kontakPenulisRepository,
+                )
+        }
+        initializer { UpdateBukuViewModel(createSavedStateHandle(),
+            book = aplikasiKontak().bukcontainer.kontakRepository,
+            kat = aplikasiKontak().katcontainer.kontakKategoriRepository,
+            terbit = aplikasiKontak().penerbitcontainer.kontakPenerbitRepository,
+            tulis = aplikasiKontak().penuliscontainer.kontakPenulisRepository,
+            )
+        }
 
         initializer { HomeKategoriViewModel(aplikasiKontak().katcontainer.kontakKategoriRepository) }
         initializer { InsertKategoriViewModel(aplikasiKontak().katcontainer.kontakKategoriRepository) }

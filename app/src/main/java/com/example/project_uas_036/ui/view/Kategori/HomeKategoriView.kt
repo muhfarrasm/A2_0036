@@ -21,12 +21,18 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Done
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.MailOutline
+import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -411,6 +417,7 @@ fun KategoriLayout(
 }
 
 @Composable
+
 fun kategoriCard(
     kategori: Kategori,
     modifier: Modifier = Modifier,
@@ -422,38 +429,71 @@ fun kategoriCard(
         elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
-
-            )
+        )
     ) {
         Column(
             modifier = Modifier
-                .padding(10.dp),
-            verticalArrangement = Arrangement.spacedBy(10.dp)
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
+            // Row for ID Kategori and Delete Button
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
+                Icon(
+                    imageVector = Icons.Default.Star, // Replace with appropriate icon
+                    contentDescription = "ID Kategori",
+                    modifier = Modifier.size(20.dp),
+                    tint = MaterialTheme.colorScheme.primary
+                )
+                Spacer(Modifier.width(8.dp))
                 Text(
                     text = kategori.idkategori,
-                    style = MaterialTheme.typography.titleLarge
+                    style = MaterialTheme.typography.titleMedium
                 )
                 Spacer(Modifier.weight(1f))
                 IconButton(onClick = { onDeleteClick(kategori) }) {
                     Icon(
                         imageVector = Icons.Default.Delete,
-                        contentDescription = null,
+                        contentDescription = "Delete Kategori",
+                        tint = MaterialTheme.colorScheme.error
                     )
                 }
+            }
+
+            // Row for Nama Kategori
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    imageVector = Icons.Default.AccountBox, // Replace with appropriate icon
+                    contentDescription = "Nama Kategori",
+                    modifier = Modifier.size(20.dp),
+                    tint = MaterialTheme.colorScheme.primary
+                )
+                Spacer(Modifier.width(8.dp))
                 Text(
                     text = kategori.namaKategori,
                     style = MaterialTheme.typography.titleMedium
                 )
             }
-            Text(
-                text = kategori.deskripsiKategori,
-                style = MaterialTheme.typography.titleMedium
-            )
+            // Row for Deskripsi Kategori
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Info, // Replace with appropriate icon
+                    contentDescription = "Deskripsi Kategori",
+                    modifier = Modifier.size(20.dp),
+                    tint = MaterialTheme.colorScheme.primary
+                )
+                Spacer(Modifier.width(8.dp))
+                Text(
+                    text = kategori.deskripsiKategori,
+                    style = MaterialTheme.typography.titleMedium
+                )
+            }
         }
     }
 }

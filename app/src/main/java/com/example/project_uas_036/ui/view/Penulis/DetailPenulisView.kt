@@ -2,15 +2,26 @@ package com.example.project_uas_036.ui.view.Penulis
 
 import android.os.Build
 import androidx.annotation.RequiresExtension
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Call
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -18,6 +29,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -58,21 +70,6 @@ fun DetailPenulisViewScreen(
             )
         },
 
-//        floatingActionButton = {
-//            FloatingActionButton(
-//                onClick = {
-//                    Log.d("DetailBukuViewScreen", "FloatingActionButton clicked, navigating to update screen")
-//                    navigateToItemUpdate()
-//                },
-//                shape = MaterialTheme.shapes.medium,
-//                modifier = Modifier.padding(18.dp)
-//            ) {
-//                Icon(
-//                    imageVector = Icons.Default.Edit,
-//                    contentDescription = "Edit Kontak"
-//                )
-//            }
-//        }
     ) { innerPadding ->
         DetailBukuStatus(
             modifier = Modifier.padding(innerPadding),
@@ -122,21 +119,18 @@ fun ItemDetailPenulis(
         modifier = modifier.padding(16.dp),
         shape = MaterialTheme.shapes.medium,
         elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.primaryContainer,
-            contentColor = MaterialTheme.colorScheme.onPrimaryContainer
-        )
+        colors = CardDefaults.cardColors(containerColor = Color.White)
     ) {
         Column(
             modifier = Modifier.padding(16.dp)
         ) {
-            ComponentDetailMhs(judul = "Id Buku", isinya = penulis.id_penulis)
-            Spacer(modifier = Modifier.padding(5.dp))
-            ComponentDetailMhs(judul = "Nama", isinya = penulis.namaPenulis)
-            Spacer(modifier = Modifier.padding(5.dp))
-            ComponentDetailMhs(judul = "Deskripsi", isinya = penulis.kontak)
-            Spacer(modifier = Modifier.padding(5.dp))
-            ComponentDetailMhs(judul = "Tanggal Terbit", isinya = penulis.biografi)
+            ComponentDetailMhs(judul = "Id Buku", isinya = penulis.id_penulis, icon = Icons.Default.Star)
+            Spacer(modifier = Modifier.padding(8.dp))
+            ComponentDetailMhs(judul = "Nama", isinya = penulis.namaPenulis, icon = Icons.Default.Person)
+            Spacer(modifier = Modifier.padding(8.dp))
+            ComponentDetailMhs(judul = "Deskripsi", isinya = penulis.kontak, icon = Icons.Default.Info)
+            Spacer(modifier = Modifier.padding(8.dp))
+            ComponentDetailMhs(judul = "Biografi", isinya = penulis.biografi, icon = Icons.Default.PlayArrow)
 
         }
     }
@@ -146,18 +140,33 @@ fun ItemDetailPenulis(
 fun ComponentDetailMhs(
     modifier: Modifier = Modifier,
     judul: String,
-    isinya: String
+    isinya: String,
+    icon: ImageVector
 ) {
     Column(
         modifier = modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.Start
     ) {
-        Text(
-            text = judul,
-            fontSize = 16.sp,
-            fontWeight = FontWeight.Bold,
-            color = Color.Gray
-        )
+        Row (
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ){
+            Icon(
+                modifier = Modifier.size(24.dp),
+                imageVector = icon,
+                contentDescription = null,
+                tint = Color.Blue
+            )
+            Text(
+                text = judul,
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.Gray
+            )
+
+
+        }
+
         Text(
             text = isinya,
             fontSize = 18.sp,

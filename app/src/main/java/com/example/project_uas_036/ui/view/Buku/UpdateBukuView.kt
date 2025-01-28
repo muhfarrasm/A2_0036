@@ -66,6 +66,9 @@ fun UpdateBukuScreen(
                 modifier = Modifier.padding(horizontal = 16.dp).padding(top = 16.dp),
                 insertUiState = viewModel.updateUiState,
                 onbookValueChange = viewModel::updateInsertBukuState,
+                kategoriList = viewModel.katList,
+                penulisList = viewModel.tulisList,
+                penerbitList = viewModel.terbitList,
                 onSaveClick = {
                     coroutineScope.launch {
                         viewModel.updateBuku()

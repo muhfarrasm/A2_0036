@@ -22,13 +22,16 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Call
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.MailOutline
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -94,7 +97,7 @@ fun HomePenulisScreen(
                 Spacer(modifier = Modifier.height(10.dp)) // Memberikan jarak atas
                 HeaderPenulis(
                     namaApp = "EduLibApps",
-                    ID = R.drawable.toga
+                    ID = R.drawable.toga_buku
                 )
                 Spacer(modifier = Modifier.height(10.dp))
                 CoustumeTopAppBar(
@@ -425,65 +428,104 @@ fun PenulisCard(
     onUpdateClick: (Penulis) -> Unit = {}
 ) {
     Card(
-        modifier = modifier,
+        modifier = modifier.padding(5.dp),
         shape = MaterialTheme.shapes.medium,
         elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
-
-            )
+            containerColor = MaterialTheme.colorScheme.surfaceContainerHigh
+        )
     ) {
         Column(
             modifier = Modifier
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
+            // Baris atas dengan ID Penulis dan Tombol Aksi
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
+                Icon(
+                    imageVector = Icons.Default.Star,
+                    contentDescription = "ID Penulis",
+                    modifier = Modifier.size(20.dp),
+                    tint = MaterialTheme.colorScheme.primary
+                )
+                Spacer(Modifier.width(8.dp))
                 Text(
                     text = penulis.id_penulis,
-                    style = MaterialTheme.typography.titleLarge
+                    style = MaterialTheme.typography.titleMedium
                 )
                 Spacer(Modifier.weight(1f))
                 IconButton(onClick = { onDeleteClick(penulis) }) {
                     Icon(
                         imageVector = Icons.Default.Delete,
-                        contentDescription = null,
+                        contentDescription = "Hapus Penulis",
+                        tint = MaterialTheme.colorScheme.error
                     )
                 }
-
-                IconButton(onClick = { onUpdateClick(penulis) }) { // Tambahkan ini
+                IconButton(onClick = { onUpdateClick(penulis) }) {
                     Icon(
-                        imageVector = Icons.Default.Edit, // Ganti dengan ikon edit (jika ada)
+                        imageVector = Icons.Default.Edit,
                         contentDescription = "Update Penulis",
+                        tint = MaterialTheme.colorScheme.scrim
                     )
                 }
-                Spacer(Modifier.weight(0.7f))
-                Column{
-                    Text(
-                        text = penulis.namaPenulis,
-                        style = MaterialTheme.typography.titleMedium,
-
-                    )
-                    Spacer(Modifier.height(10.dp))
-                    Text(
-                        text = penulis.biografi,
-                        style = MaterialTheme.typography.titleMedium
-                    )
-
-                }
-
             }
-            Text(
-                text = penulis.kontak,
-                style = MaterialTheme.typography.titleMedium
-            )
 
+            // Informasi Nama Penulis
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Person,
+                    contentDescription = "Nama Penulis",
+                    modifier = Modifier.size(20.dp),
+                    tint = MaterialTheme.colorScheme.primary
+                )
+                Spacer(Modifier.width(8.dp))
+                Text(
+                    text = penulis.namaPenulis,
+                    style = MaterialTheme.typography.titleMedium
+                )
+            }
 
+            // Informasi Biografi
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Info,
+                    contentDescription = "Biografi Penulis",
+                    modifier = Modifier.size(20.dp),
 
+                    tint = MaterialTheme.colorScheme.primary
+                )
+                Spacer(Modifier.width(8.dp))
+                Text(
+                    text = penulis.biografi,
+                    style = MaterialTheme.typography.titleMedium,
 
+                )
+            }
+
+            // Informasi Kontak
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Call,
+                    contentDescription = "Kontak Penulis",
+                    modifier = Modifier.size(20.dp),
+                    tint = MaterialTheme.colorScheme.primary
+                )
+                Spacer(Modifier.width(8.dp))
+                Text(
+                    text = penulis.kontak,
+                    style = MaterialTheme.typography.titleMedium,
+
+                )
+            }
         }
     }
 }
