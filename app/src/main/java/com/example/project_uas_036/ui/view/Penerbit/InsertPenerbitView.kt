@@ -61,6 +61,7 @@ fun EntryPenerbitScreen(
     ){innerPadding ->
         EntryBody(
             insertPenerbitUiState = viewModel.PeneUiState,
+            errorMessages = viewModel.errorMessages,
             onpeneValueChange = viewModel::updateInsertPenerbitState,
             onSaveClick = {
                 coroutineScope.launch {
@@ -86,6 +87,7 @@ fun EntryBody(
     insertPenerbitUiState: InsertPenerbitUiState,
     onpeneValueChange: (InsertPenerbitUiEvent) -> Unit,
     onSaveClick: () -> Unit,
+    errorMessages: Map<String, String>,
     modifier: Modifier = Modifier
 ) {
     // Scroll state hanya dideklarasikan di dalam EntryBody
@@ -102,6 +104,7 @@ fun EntryBody(
         FormInput(
             insertPenerbitUiEvent = insertPenerbitUiState.insertPenerbitUiEvent,
             onValueChange = onpeneValueChange,
+            errorMessages = errorMessages,
             modifier = Modifier.fillMaxWidth()
         )
         Button(

@@ -85,7 +85,8 @@ fun UpdatePenerbitScreen(
                             onNavigate()
                         }
                     }
-                }
+                },
+                errorMessages = viewModel.errorMessages
             )
             Spacer(modifier = Modifier.height(16.dp))
 

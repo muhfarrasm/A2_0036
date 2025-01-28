@@ -17,6 +17,11 @@ class UpdatePenebitViewModel (
     var updatePenerbitUiState by mutableStateOf(InsertPenerbitUiState())
         private set
 
+    var errorMessages by mutableStateOf<Map<String, String>>(emptyMap())
+        private set
+
+    val phoneRegex = Regex("^[0-9]{10,15}$")
+
     private val _idpenerbit: String = checkNotNull(savedStateHandle[DestinasiUpdatePenerbit.id_penerbit])
 
     init {
@@ -24,6 +29,27 @@ class UpdatePenebitViewModel (
             updatePenerbitUiState = Pene.getPenerbitbyId(_idpenerbit).data
                 .toUiStatePene()
         }
+    }
+
+    fun validateInput(): Boolean {
+        val errors = mutableMapOf<String, String>()
+
+        val phoneRegex = Regex("^[0-9]{10,15}$") // Hanya angka dengan panjang 10-15 digit
+
+        if (updatePenerbitUiState.insertPenerbitUiEvent.namaPenerbit.isBlank()) {
+            errors["name"] = "Name cannot be empty"
+        }
+
+        if (updatePenerbitUiState.insertPenerbitUiEvent.alamatPenerbit.isBlank()) {
+            errors["alamat"] = "Description cannot be empty"
+        }
+
+        if (!phoneRegex.matches(updatePenerbitUiState.insertPenerbitUiEvent.teleponPenerbit)) {
+            errors["phone"] = "Phone number must be numeric and 10-15 digits long"
+        }
+
+        errorMessages = errors
+        return errors.isEmpty()
     }
 
     fun updateInsertPenerbitState(insertPenerbitUiEvent: InsertPenerbitUiEvent){

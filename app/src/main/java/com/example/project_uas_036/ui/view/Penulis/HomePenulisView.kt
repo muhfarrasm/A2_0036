@@ -32,6 +32,8 @@ import androidx.compose.material.icons.filled.MailOutline
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Star
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -41,8 +43,13 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -144,6 +151,38 @@ fun HomePenulisScreen(
         )
     }
 }
+
+
+@Composable
+private fun DeleteConfirmationDialog(
+    onDeleteConfirm: () -> Unit,
+    onDeleteCancel: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    AlertDialog(
+        onDismissRequest = { },
+        title = { Text("Delete Data", color = Color.Red) },
+        text = { Text("Apakah Anda Yakin Ingin Menghapus Data Ini?") },
+        modifier = modifier,
+        confirmButton = {
+
+            TextButton(
+                onClick = onDeleteConfirm,
+                colors = ButtonDefaults.buttonColors(containerColor = Color.Red)
+            ) {
+                Text(text = "Yes")
+            }
+        },
+        dismissButton = {
+            TextButton(
+                onClick = onDeleteCancel
+            ) {
+                Text(text = "Cancel")
+            }
+        }
+    )
+}
+
 @Composable
 fun BottomNavBar(
     navigateToPenulisEntry: () -> Unit,
@@ -427,6 +466,20 @@ fun PenulisCard(
     onDeleteClick: (Penulis) -> Unit = {},
     onUpdateClick: (Penulis) -> Unit = {}
 ) {
+
+    var showDialog by remember { mutableStateOf(false) }
+
+    if (showDialog) {
+        DeleteConfirmationDialog(
+            onDeleteConfirm = {
+                showDialog = false
+                onDeleteClick(penulis)
+            },
+            onDeleteCancel = {
+                showDialog = false
+            }
+        )
+    }
     Card(
         modifier = modifier.padding(5.dp),
         shape = MaterialTheme.shapes.medium,
@@ -457,10 +510,10 @@ fun PenulisCard(
                     style = MaterialTheme.typography.titleMedium
                 )
                 Spacer(Modifier.weight(1f))
-                IconButton(onClick = { onDeleteClick(penulis) }) {
+                IconButton(onClick = { showDialog = true }) {
                     Icon(
                         imageVector = Icons.Default.Delete,
-                        contentDescription = "Hapus Penulis",
+                        contentDescription = "Delete Buku",
                         tint = MaterialTheme.colorScheme.error
                     )
                 }
