@@ -15,37 +15,38 @@
 3. Detail Buku
    ![Detail_Buku](https://github.com/user-attachments/assets/e00d344e-135d-45e1-b577-44178d71301c)
 
+4. Delete Buku
+   ![Delete Buku](https://github.com/user-attachments/assets/a68427be-9978-4997-bfe7-d7d118b1c782)
 
 
 
-4. Home Buku setelah salah satu data dihapus
+5. Home Buku setelah salah satu data dihapus
    ![Home_Buku setelah salah satu data dihapus](https://github.com/user-attachments/assets/2f88b6ff-cfb7-42be-95d8-067920b92a82)
 
 
 
 
-5. Edit Buku
+6. Edit Buku
    ![Edit_Buku](https://github.com/user-attachments/assets/07b2c722-72f4-40a1-8609-dcc26a920333)
 
 
 
 
-6. Home Buku setelah edit data
+7. Home Buku setelah edit data
    ![Home_Buku Setelah Edit Data](https://github.com/user-attachments/assets/428b8954-dfaf-44bb-9829-a64e6bceeeed)
 
 
-
-7. Tambah Buku
+8. Tambah Buku
    ![Tambah_Buku](https://github.com/user-attachments/assets/444de1e3-c7a4-417a-8cec-ca2748d725d1)
 
 
 
-8. Tambah Buku terisi data
+9. Tambah Buku terisi data
    ![Tambah_Buku terisi](https://github.com/user-attachments/assets/bd0d9e54-89a6-49f4-a163-657158d4298c)
 
 
 
-9. Home Buku Setelah tambah data
+10. Home Buku Setelah tambah data
     ![Home_Buku setelah menambah data](https://github.com/user-attachments/assets/1ac483f4-ba5d-430a-bb21-90e1e11b2ea3)
 
 
@@ -61,20 +62,24 @@
 
 2. Detail Kategori
    ![Detail_Kategori](https://github.com/user-attachments/assets/19cdbf6c-043b-42be-94a2-c6fbba7e4559)
+   
 
+4. Delete Kategori
+   ![Delete kategori](https://github.com/user-attachments/assets/520137e4-5413-4ed9-861d-76ae80d76f74)
 
+   
 
-3. Home Kategori Setelah Hapus Data
+5. Home Kategori Setelah Hapus Data
    ![Home_Kategori setelah hapus data](https://github.com/user-attachments/assets/9e8902cd-9a7e-4509-abb9-ff9fa68e0a0d)
 
 
 
-4. Tambah Data Kategori
+6. Tambah Data Kategori
    ![Tambah_Kategori](https://github.com/user-attachments/assets/5ef8a4cc-732f-45cd-ad7a-7e3cc7798185)
 
 
 
-5. Home Kategori setelah tambah data
+7. Home Kategori setelah tambah data
    ![Home_Kategori setelah tambah data](https://github.com/user-attachments/assets/3001a45d-e912-4149-be5d-23f501522f33)
 
 
@@ -98,20 +103,24 @@
 
 4. Home Penulis Setelah Data di Edit
    ![Home_Penulis setelah data di Edit](https://github.com/user-attachments/assets/ada91aae-1e2e-4420-88ab-e7806aed81d2)
+   
+
+6. Delete Penulis
+   ![Delete Penulis](https://github.com/user-attachments/assets/f72ca099-e870-4d28-b024-42110acbcbdc)
 
 
 
-5. Home Penulis Setelah Data di Hapus
+7. Home Penulis Setelah Data di Hapus
   ![Home_Penulis setelah data dihapus](https://github.com/user-attachments/assets/b685fd12-52a9-4203-99af-0747b3fcd5cd)
 
 
 
-6. Tambah Penulis
+8. Tambah Penulis
    ![Tambah_Penulis](https://github.com/user-attachments/assets/cc228f46-0319-4586-9de9-dba5ec1ae5ba)
 
 
 
-7. Home Penulis Setelah Tambah Data
+9. Home Penulis Setelah Tambah Data
    ![Home_Penulis setelah tambah data](https://github.com/user-attachments/assets/a86025b1-fe07-43ae-9bb6-d022b86f7a6e)
 
 
